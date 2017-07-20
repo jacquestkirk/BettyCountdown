@@ -9,9 +9,30 @@
     <title>Betty Countdown Timer</title>
   </head>
   <body ng-controller='BettyCountdownController as bettyController'>
-    <h1>Betty Countdown Timer</h1>
+    <h1>Time Until Betty Gets Back!!!</h1>
     <div>
-      <font size="20">{{bettyController.timeRemaining}} </font>
+      {{bettyController.updateCurrentTime()}}
+      <font size="20">
+        <table>
+          <tr>
+            <td>Days: </td>
+            <td>{{bettyController.timeRemaining.days}}</td>
+          </tr>
+          <tr>
+            <td>Hours: </td>
+            <td>{{bettyController.timeRemaining.hours}}</td>
+          </tr>
+          <tr>
+            <td>Minutes: </td>
+            <td>{{bettyController.timeRemaining.minutes}}</td>
+          </tr>
+          <tr>
+            <td>Seconds: </td>
+            <td>{{bettyController.timeRemaining.seconds}}</td>
+          </tr>
+
+        </table>
+      </font>
     </div>
     <div>
       <font size = "1">

@@ -6,59 +6,76 @@ angular.module('BettyCountdownApp', [])
 .controller('ShoppingListAddController', ShoppingListAddController)
 .controller('ShoppingListShowController', ShoppingListShowController)
 .service('ShoppingListService', ShoppingListService);
+.service('TimeRemainingService', TimeRemainingService);
 
 
 function BettyCountdownController()
 {
   var bettyContdownController = this;
 
-  //find current time
-  var currentDateTime = new Date();
-  var currentDate_Str = currentDateTime.toDateString();
-  var currentTime_Str = currentDateTime.toTimeString();
+  this.currentTime = 0;
+  this.returnTime = 0;
+  this.timeRemaining = {
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  };
 
-  this.currentTime = currentDate_Str + " " + currentTime_Str;
 
-  //find time of Betty's return
-  var returnDateTime = new Date(2017,6,23,17,25,0,0);
-  var returnDate_Str = returnDateTime.toDateString();
-  var returnTime_Str = returnDateTime.toTimeString();
 
-  this.returnTime = returnDate_Str + " " + returnTime_Str;
 
-  //Calculate time remaining
+  this.updateCurrentTime = function()
+  {
+    //find current time
+    var currentDateTime = new Date();
+    var currentDate_Str = currentDateTime.toDateString();
+    var currentTime_Str = currentDateTime.toTimeString();
 
-  var ms_per_s = 1000;
-  var s_per_min = 60;
-  var min_per_hour = 60;
-  var hrs_per_day = 24;
+    this.currentTime = currentDate_Str + " " + currentTime_Str;
 
-  var remainingTime_ms = returnDateTime - currentDateTime;
+    //find time of Betty's return
+    var returnDateTime = new Date(2017,6,23,17,25,0,0);
+    var returnDate_Str = returnDateTime.toDateString();
+    var returnTime_Str = returnDateTime.toTimeString();
 
-  console.log(new moment.duration(remainingTime_ms).asDays())
-  var daysRemaining = Math.floor(remainingTime_ms / (ms_per_s * s_per_min * min_per_hour * hrs_per_day));
-  var daysRemaining_ms = daysRemaining * (ms_per_s * s_per_min * min_per_hour * hrs_per_day)
+    this.returnTime = returnDate_Str + " " + returnTime_Str;
 
-  console.log(remainingTime_ms)
-  remainingTime_ms = remainingTime_ms - daysRemaining_ms
-  var hoursRemaining = Math.floor(remainingTime_ms / (ms_per_s * s_per_min * min_per_hour));
-  var hoursRemaining_ms = hoursRemaining * (ms_per_s * s_per_min * min_per_hour);
+    //Calculate time remaining
 
-  remainingTime_ms = remainingTime_ms - hoursRemaining_ms
-  var minRemaining = Math.floor(remainingTime_ms / (ms_per_s * s_per_min));
-  var minRemaining_ms = minRemaining * (ms_per_s * s_per_min);
+    var ms_per_s = 1000;
+    var s_per_min = 60;
+    var min_per_hour = 60;
+    var hrs_per_day = 24;
 
-  console.log(remainingTime_ms)
-  console.log(minRemaining_ms)
-  remainingTime_ms = remainingTime_ms - minRemaining_ms
-  console.log(remainingTime_ms)
-  var secRemaining = Math.floor(remainingTime_ms / (ms_per_s));
+    var remainingTime_ms = returnDateTime - currentDateTime;
 
-  this.timeRemaining = "Days: "+ daysRemaining
-                        +" Hours: " + hoursRemaining
-                        +" Minutes: " + minRemaining
-                        +" Seconds: " + secRemaining;
+    console.log(new moment.duration(remainingTime_ms).asDays())
+    var daysRemaining = Math.floor(remainingTime_ms / (ms_per_s * s_per_min * min_per_hour * hrs_per_day));
+    var daysRemaining_ms = daysRemaining * (ms_per_s * s_per_min * min_per_hour * hrs_per_day)
 
+    console.log(remainingTime_ms)
+    remainingTime_ms = remainingTime_ms - daysRemaining_ms
+    var hoursRemaining = Math.floor(remainingTime_ms / (ms_per_s * s_per_min * min_per_hour));
+    var hoursRemaining_ms = hoursRemaining * (ms_per_s * s_per_min * min_per_hour);
+
+    remainingTime_ms = remainingTime_ms - hoursRemaining_ms
+    var minRemaining = Math.floor(remainingTime_ms / (ms_per_s * s_per_min));
+    var minRemaining_ms = minRemaining * (ms_per_s * s_per_min);
+
+    console.log(remainingTime_ms)
+    console.log(minRemaining_ms)
+    remainingTime_ms = remainingTime_ms - minRemaining_ms
+    console.log(remainingTime_ms)
+    var secRemaining = Math.floor(remainingTime_ms / (ms_per_s));
+
+    this.timeRemaining.days = daysRemaining
+    this.timeRemaining.hours = hoursRemaining
+    this.timeRemaining.minutes = minRemaining
+    this.timeRemaining.seconds = secRemaining
+    }
+
+    //this.updateCurrentTime();
 }
 
 ShoppingListAddController.$inject = ['ShoppingListService'];
@@ -107,6 +124,11 @@ function ShoppingListService() {
   service.getItems = function () {
     return items;
   };
+}
+
+function timeRemainingService()
+{
+
 }
 
 })();
