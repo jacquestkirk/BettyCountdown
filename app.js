@@ -3,15 +3,40 @@
 
 angular.module('BettyCountdownApp', [])
 .controller('BettyCountdownController', BettyCountdownController)
-.controller('ShoppingListAddController', ShoppingListAddController)
-.controller('ShoppingListShowController', ShoppingListShowController)
-.service('ShoppingListService', ShoppingListService);
 .service('TimeRemainingService', TimeRemainingService);
 
 
-function BettyCountdownController()
+var TimeRemainingFormat = {
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+};
+
+BettyCountdownController.$inject=['TimeRemainingService'];
+function BettyCountdownController(TimeRemainingService)
 {
   var bettyContdownController = this;
+  this.currentTime = 0;
+  this.returnTime = 0;
+  this.timeRemaining= Object.create(TimeRemainingFormat);
+
+  this.updateCurrentTime = function()
+  {
+    console.log(TimeRemainingService)
+    TimeRemainingService.updateCurrentTime();
+    this.currentTime = TimeRemainingService.currentTime;
+    this.returnTime = TimeRemainingService.returnTime;
+    this.timeRemaining = TimeRemainingService.timeRemaining;
+
+  }
+
+}
+
+function TimeRemainingService()
+{
+
+  var timeRemaingService = this;
 
   this.currentTime = 0;
   this.returnTime = 0;
@@ -21,9 +46,6 @@ function BettyCountdownController()
     minutes: 0,
     seconds: 0,
   };
-
-
-
 
   this.updateCurrentTime = function()
   {
@@ -73,62 +95,7 @@ function BettyCountdownController()
     this.timeRemaining.hours = hoursRemaining
     this.timeRemaining.minutes = minRemaining
     this.timeRemaining.seconds = secRemaining
-    }
-
-    //this.updateCurrentTime();
-}
-
-ShoppingListAddController.$inject = ['ShoppingListService'];
-function ShoppingListAddController(ShoppingListService) {
-  var itemAdder = this;
-
-  itemAdder.itemName = "";
-  itemAdder.itemQuantity = "";
-
-  itemAdder.addItem = function () {
-    ShoppingListService.addItem(itemAdder.itemName, itemAdder.itemQuantity);
-  }
-}
-
-
-ShoppingListShowController.$inject = ['ShoppingListService'];
-function ShoppingListShowController(ShoppingListService) {
-  var showList = this;
-
-  showList.items = ShoppingListService.getItems();
-
-  showList.removeItem = function (itemIndex) {
-    ShoppingListService.removeItem(itemIndex);
   };
-}
-
-
-function ShoppingListService() {
-  var service = this;
-
-  // List of shopping items
-  var items = [];
-
-  service.addItem = function (itemName, quantity) {
-    var item = {
-      name: itemName,
-      quantity: quantity
-    };
-    items.push(item);
-  };
-
-  service.removeItem = function (itemIdex) {
-    items.splice(itemIdex, 1);
-  };
-
-  service.getItems = function () {
-    return items;
-  };
-}
-
-function timeRemainingService()
-{
-
 }
 
 })();
