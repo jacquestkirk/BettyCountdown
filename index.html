@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app='BettyCountdownApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="angular.min.js"></script>
+    <script src="moment.min.js"></script>
+    <script src="app.js"></script>
+    <style> body { font-size: 1.2em; }</style>
+    <title>Betty Countdown Timer</title>
+  </head>
+  <body ng-controller='BettyCountdownController as bettyController'>
+    <h1>Betty Countdown Timer</h1>
+    <div>
+      <font size="20">{{bettyController.timeRemaining}} </font>
+    </div>
+    <div>
+      <font size = "1">
+      Current Time: {{bettyController.currentTime}} </br>
+      Return Time: {{bettyController.returnTime}} </br>
+    </font>
+    </div>
+  </body>
+</html>
