@@ -3,8 +3,7 @@
 
 angular.module('BettyCountdownApp', [])
 .controller('BettyCountdownController', BettyCountdownController)
-.service('TimeRemainingService', TimeRemainingService);
-
+.provider('BettyArrivalService', BettyArrivalServiceProvider)
 
 var TimeRemainingFormat = {
   days: 0,
@@ -13,8 +12,8 @@ var TimeRemainingFormat = {
   seconds: 0,
 };
 
-BettyCountdownController.$inject=['TimeRemainingService'];
-function BettyCountdownController(TimeRemainingService)
+BettyCountdownController.$inject=['BettyArrivalService'];
+function BettyCountdownController(BettyArrivalService)
 {
   var bettyContdownController = this;
   this.currentTime = 0;
@@ -23,11 +22,11 @@ function BettyCountdownController(TimeRemainingService)
 
   this.updateCurrentTime = function()
   {
-    console.log(TimeRemainingService)
-    TimeRemainingService.updateCurrentTime();
-    this.currentTime = TimeRemainingService.currentTime;
-    this.returnTime = TimeRemainingService.returnTime;
-    this.timeRemaining = TimeRemainingService.timeRemaining;
+    console.log(BettyArrivalService)
+    BettyArrivalService.updateCurrentTime();
+    this.currentTime = BettyArrivalService.currentTime;
+    this.returnTime = BettyArrivalService.returnTime;
+    this.timeRemaining = BettyArrivalService.timeRemaining;
 
   }
 
@@ -35,18 +34,32 @@ function BettyCountdownController(TimeRemainingService)
 
 function BettyArrivalServiceProvider()
 {
+  this.defaults = {
+    endDateString: "2017-07-23T17:25:00-05:00",
+  }
 
+  this.$get = function(){
+    var bettyArrivalService = new TimeRemainingService(this.defaults.endDateString);
+    return bettyArrivalService;
+  }
 }
 
-function MoveInServiceProvideR()
+function MoveInServiceProvider()
 {
+  this.defaults = {
+    endDateString: "2017-09-01T10:00:00-05:00",
+  }
 
+  this.$get = function(){
+    var bettyArrivalService = new TimeRemainingService(this.defaults.endDateString);
+    return bettyArrivalService;
+  }
 }
 
-function TimeRemainingService()
+function TimeRemainingService(endDateString)
 {
 
-  var endDateString = "2017-07-23T17:25:00-05:00";
+  //var endDateString = "2017-07-23T17:25:00-05:00";
 
   var timeRemaingService = this;
 
