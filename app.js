@@ -33,8 +33,20 @@ function BettyCountdownController(TimeRemainingService)
 
 }
 
+function BettyArrivalServiceProvider()
+{
+
+}
+
+function MoveInServiceProvideR()
+{
+
+}
+
 function TimeRemainingService()
 {
+
+  var endDateString = "2017-07-23T17:25:00-05:00";
 
   var timeRemaingService = this;
 
@@ -50,18 +62,15 @@ function TimeRemainingService()
   this.updateCurrentTime = function()
   {
     //find current time
-    var currentDateTime = new Date();
-    var currentDate_Str = currentDateTime.toDateString();
-    var currentTime_Str = currentDateTime.toTimeString();
 
-    this.currentTime = currentDate_Str + " " + currentTime_Str;
+    var dateFormat = 'YYYY-DD-MM HH:mm:ss';
+    var currentDateTime = moment()
+    this.currentTime = currentDateTime.format(dateFormat)
 
     //find time of Betty's return
-    var returnDateTime = new Date(2017,6,23,17,25,0,0);
-    var returnDate_Str = returnDateTime.toDateString();
-    var returnTime_Str = returnDateTime.toTimeString();
+    var returnDateTime =  moment(endDateString)
 
-    this.returnTime = returnDate_Str + " " + returnTime_Str;
+    this.returnTime = returnDateTime.format(dateFormat)
 
     //Calculate time remaining
 
