@@ -8,9 +8,9 @@
     <style> body { font-size: 1.2em; }</style>
     <title>Betty Countdown Timer</title>
   </head>
-  <body ng-controller='BettyCountdownController as bettyController'>
+  <body>
     <h1>Time Until Betty Gets Back!!!</h1>
-    <div>
+    <div ng-controller='BettyCountdownController as bettyController'>
       {{bettyController.updateCurrentTime()}}
       <font size="20">
         <table>
@@ -33,12 +33,39 @@
 
         </table>
       </font>
-    </div>
-    <div>
       <font size = "1">
-      Current Time: {{bettyController.currentTime}} </br>
-      Return Time: {{bettyController.returnTime}} </br>
-    </font>
+        Current Time: {{bettyController.currentTime}} </br>
+        Return Time: {{bettyController.returnTime}} </br>
+      </font>
+    </div>
+    <div ng-controller='MoveInController as moveinController'>
+      {{moveinController.updateCurrentTime()}}
+      <h1> New Apartment !! </h1>
+      <font size="20">
+        <table>
+          <tr>
+            <td>Days: </td>
+            <td>{{moveinController.timeRemaining.days}}</td>
+          </tr>
+          <tr>
+            <td>Hours: </td>
+            <td>{{moveinController.timeRemaining.hours}}</td>
+          </tr>
+          <tr>
+            <td>Minutes: </td>
+            <td>{{moveinController.timeRemaining.minutes}}</td>
+          </tr>
+          <tr>
+            <td>Seconds: </td>
+            <td>{{moveinController.timeRemaining.seconds}}</td>
+          </tr>
+
+        </table>
+      </font>
+      <font size = "1">
+        Current Time: {{moveinController.currentTime}} </br>
+        Return Time: {{moveinController.returnTime}} </br>
+      </font>
     </div>
   </body>
 </html>

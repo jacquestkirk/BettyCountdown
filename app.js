@@ -3,7 +3,9 @@
 
 angular.module('BettyCountdownApp', [])
 .controller('BettyCountdownController', BettyCountdownController)
+.controller('MoveInController', MoveInController)
 .provider('BettyArrivalService', BettyArrivalServiceProvider)
+.provider('MoveInService', MoveInServiceProvider)
 
 var TimeRemainingFormat = {
   days: 0,
@@ -30,6 +32,25 @@ function BettyCountdownController(BettyArrivalService)
 
   }
 
+}
+
+MoveInController.$inject=['MoveInService'];
+function MoveInController(MoveInService)
+{
+  var moveInController = this;
+  this.currentTime = 0;
+  this.returnTime = 0;
+  this.timeRemaining= Object.create(TimeRemainingFormat);
+
+  this.updateCurrentTime = function()
+  {
+    console.log(MoveInService)
+    MoveInService.updateCurrentTime();
+    this.currentTime = MoveInService.currentTime;
+    this.returnTime = MoveInService.returnTime;
+    this.timeRemaining = MoveInService.timeRemaining;
+
+  }
 }
 
 function BettyArrivalServiceProvider()
